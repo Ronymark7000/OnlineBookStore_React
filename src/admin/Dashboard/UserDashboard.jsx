@@ -1,42 +1,44 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import DataTable from "../components/DataTable";
-import { getStarWarsCharacters } from "../../services/starWarsCharater";
+import { getUsers } from "../../services/starWarsCharater";
 
-const Dashboard = () => {
+const UserDashboard = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["starWarsCharacters"],
-    queryFn: () => getStarWarsCharacters(),
+    queryFn: () => getUsers(),
   });
 
   const columns = useMemo(() => {
     return [
       {
-        accessorKey: "name",
-        header: "Name",
+        accessorKey: "userId",
+        header: "User ID",
         cell: ({ getValue }) => {
           return <div>{getValue()}</div>;
         },
       },
       {
-        accessorKey: "height",
-        header: "height",
+        accessorKey: "username",
+        header: "Username",
         cell: ({ getValue }) => {
           return <div>{getValue()}</div>;
         },
       },
       {
-        accessorKey: "gender",
-        header: "gender",
+        accessorKey: "email",
+        header: "User Email",
         cell: ({ getValue }) => {
           return <div>{getValue()}</div>;
         },
       },
+   
       {
-        accessorKey: "skin_color",
-        header: "skin_color",
+        accessorKey: "role",
+        header: "Role",
         cell: ({ getValue }) => {
-          return <div>{getValue()}</div>;
+          const isAvailable = getValue();
+          return <div>{String(isAvailable)}</div>;
         },
       },
     ];
@@ -48,9 +50,9 @@ const Dashboard = () => {
 
   return (
     <div>
-      <DataTable columns={columns} data={data?.data?.results ?? []} />
+      <DataTable columns={columns} data={data?.data?.response ?? []} />
     </div>
   );
 };
 
-export default Dashboard;
+export default UserDashboard;

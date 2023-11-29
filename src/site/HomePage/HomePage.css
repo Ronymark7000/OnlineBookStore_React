@@ -1,0 +1,25 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.custom-image-height {
+  height: 800px;
+}
+.main-container {
+  background-color: #9370db;
+}
+
+.left-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+.left-text-heading {
+}
+
+.title-heading {
+  display: inline;
+  color: #000080;
+}

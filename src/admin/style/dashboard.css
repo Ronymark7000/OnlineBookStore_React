@@ -1,0 +1,85 @@
+.cardBox{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 30px;
+}
+
+.cardBox .card{
+    position: relative;
+    background: var(--gray);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    cursor: pointer;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.cardBox .card .numbers{
+    position: relative;
+    font-weight: 500;
+    font-size: 2.0rem;
+    color: var(--gray1);
+}
+
+.cardBox .card .cardName{
+    color: var(--black);
+    font-size: 0.9rem;
+    margin-top: 5px; 
+}
+
+.cardBox .card .iconBx{
+    color: var(--gray1);
+    font-size: 3.5rem;  
+}
+
+.cardBox .card:hover{
+    background: var(--white);
+}
+
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx{
+    color: var(--black);
+}
+
+/* CSS for charts */
+
+.charts{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 36px;
+    width: 100%;
+    padding: 20px;
+    padding-top: 0;
+}
+
+.chart{
+    background: var(--gray);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow:  0 7px 25px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    color: var(--black);
+    position: relative; /* Add this line */
+    height: 470px; /* Set a fixed height for the chart container */
+}
+
+.chart h2{
+    margin-bottom: 5px;
+    font-size: 25px;
+    color: var(--gray1);
+    text-align: center;
+}
+
+canvas{
+    position: absolute; /* Add this line */
+}
+.chart:hover{
+    background: var(--white);
+    color: var(--black);
+}

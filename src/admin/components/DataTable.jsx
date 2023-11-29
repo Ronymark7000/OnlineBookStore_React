@@ -11,13 +11,13 @@ const DataTable = ({ columns = [], data = [] }) => {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <div>
+    <div >
       <table className="table">
         <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+          {table.getHeaderGroups().map((headerGroup, idx) => (
+            <tr key={idx}>
+              {headerGroup.headers.map((header, id) => (
+                <th key={id}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(
@@ -30,10 +30,10 @@ const DataTable = ({ columns = [], data = [] }) => {
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
+          {table.getRowModel().rows.map((row, idx) => (
+            <tr key={idx}>
+              {row.getVisibleCells().map((cell, id) => (
+                <td key={id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
