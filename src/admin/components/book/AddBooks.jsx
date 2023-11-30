@@ -1,8 +1,8 @@
 import { Formik, Form, Field } from "formik";
 import { Button, Label } from "reactstrap";
-import axiosInstance from "../../../axiosInstance";
+import axiosInstance from "../../../../axiosInstance";
 import { useNavigate } from "react-router-dom";
-import { BookSchema } from "../../services/bookValidation";
+import { BookSchema } from "../../../services/bookValidation";
 import { useEffect, useState } from "react";
 
 function AddBook({editBook}) {

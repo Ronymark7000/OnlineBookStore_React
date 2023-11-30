@@ -9,14 +9,14 @@ import Protected from "./Protected";
 
 import UserDashboard from "./admin/Dashboard/UserDashboard";
 import BookDashboard from "./admin/Dashboard/BookDashboard";
-import AddUser from "./admin/components/AddUser";
-import AddBook from "./admin/components/AddBooks";
-import DashboardMain from "./admin/components/DashboardMain";
-import UpdateUser from "./admin/Dashboard/UpdateUser";
-import EditUser from "./admin/components/EditUser";
-import UpdateBook from "./admin/Dashboard/UpdateBook";
-import EditBook from "./admin/components/EditBooks";
+import AddUser from "./admin/components/user/AddUser";
+import AddBook from "./admin/components/book/AddBooks";
+import UpdateUser from "./admin/components/user/UpdateUser";
+import EditUser from "./admin/components/user/EditUser";
+import UpdateBook from "./admin/components/book/UpdateBook";
+import EditBook from "./admin/components/book/EditBooks";
 import Cart from "./site/components/Cart";
+import DashboardMain from "./admin/Dashboard/DashboardMain";
 
 
 

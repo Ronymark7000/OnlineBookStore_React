@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
-import DataTable from "../components/DataTable";
-import { getBooks } from "../../services/starWarsCharater";
+import DataTable from "../DataTable";
+import { getBooks } from "../../../services/starWarsCharater";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../../axiosInstance";
+import axiosInstance from "../../../../axiosInstance";
 
 const UpdateBook = () => {
     const navigate = useNavigate();

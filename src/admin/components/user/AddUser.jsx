@@ -1,8 +1,8 @@
 import { Formik, Form, Field } from "formik";
 import { Button, Label } from "reactstrap";
-import axiosInstance from "../../../axiosInstance";
+import axiosInstance from "../../../../axiosInstance";
 import { useNavigate } from "react-router-dom";
-import { UserSchema } from "../../services/userValidation";
+import { UserSchema } from "../../../services/userValidation";
 import { useEffect, useState } from "react";
 
 function AddUser({editUser}) {

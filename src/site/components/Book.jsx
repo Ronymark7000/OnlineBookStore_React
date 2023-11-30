@@ -1,6 +1,3 @@
-
-// import { BrowserRouter as Link } from "react-router-dom";
-import { Link } from "react-router-dom";
 import {
   Button,
   Card,
@@ -9,18 +6,37 @@ import {
   CardText,
   CardTitle,
 } from "reactstrap";
+import { addToCart} from "../../services/starWarsCharater";
+
+
 export default function Book({ book }) {
-  // console.log(book);
+ 
+  const handleSubmit = async() => {
+    try {
+      // console.log(id);
+     const response = await addToCart(book.bookId);
+
+     alert(response?.message)
+
+
+      
+      
+    } catch (error) {
+      // console.error("An error occurred:", error);
+    }
+  };
+
+  const carts = JSON.parse(localStorage.getItem("cart")) || [];
+  const bookExistAlreadyExistInCart = carts.find(
+    (cart) => cart?.book?.bookId === book?.bookId
+  );
 
   return (
     <div className="col-12  col-sm-6 col-md-3">
       <div style={{ margin: "40px" }}>
-        <Card
-          style={{
-            width: "18rem",
-          }}
-        >
+        <Card style={{ width: "18rem" }}>
           <img alt="Sample" src="https://picsum.photos/300/200" />
+
           <CardBody>
             <CardTitle tag="h5">{book?.title}</CardTitle>
             <CardSubtitle className="mb-2 text-muted" tag="h6">
@@ -34,11 +50,24 @@ export default function Book({ book }) {
               }}
             >
               <Button style={{ background: "blue" }}>Buy</Button>
-              <Link to="/cart">
-                <Button style={{ background: "DodgerBlue" }}>
+
+              {!bookExistAlreadyExistInCart ? (
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  style={{ background: "DodgerBlue" }}
+                >
                   Add to Cart
                 </Button>
-              </Link>
+              ) : (
+                <Button
+                  type="submit"
+                  disabled
+                  style={{ background: "DodgerBlue" }}
+                >
+                  In Cart
+                </Button>
+              )}
             </div>
           </CardBody>
         </Card>
@@ -46,4 +75,6 @@ export default function Book({ book }) {
     </div>
   );
 }
+
+
   
