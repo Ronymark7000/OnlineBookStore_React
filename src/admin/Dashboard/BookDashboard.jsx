@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import DataTable from "../components/DataTable";
-import { getBooks } from "../../services/starWarsCharater";
+import { getallBooks } from "../../services/starWarsCharater";
 
 const BookDashboard = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["starWarsCharacters"],
-    queryFn: () => getBooks(),
+    queryFn: () => getallBooks(),
   });
 
   const columns = useMemo(() => {
@@ -51,10 +51,9 @@ const BookDashboard = () => {
         header: "Availability",
         cell: ({ getValue }) => {
           const isAvailable = getValue();
-          return <div>{String (isAvailable)}</div>;
+          return <div>{String(isAvailable)}</div>;
         },
       },
-      
     ];
   }, []);
 

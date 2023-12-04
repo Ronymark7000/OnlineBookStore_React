@@ -2,11 +2,13 @@ import "../style/login.css";
 import A from "../../assets/login.svg";
 import B from "../../assets/signup.svg";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../../axiosInstance";
 import { useState } from "react";
+import { handleLogin, handleSignup } from "../../services/starWarsCharater";
 
 const Login = () => {
   const containerRef = document.querySelector(".container");
+
+  const [formType, setFormType] = useState("login");
 
   const handleSignUpClick = () => {
     containerRef.current.classList.add("sign-up-mode2");
@@ -21,33 +23,32 @@ const Login = () => {
 
   const [username, setusername] = useState("");
   const [password, setpassword] = useState("");
-
-  //usern,,, passs ,,, email,,,, role,,,
-  const getProfile = async () => {
-    const response = await axiosInstance
-      .get("/profile")
-      .then((res) => res?.data)
-      .catch(() => null);
-
-    if (response?.success) {
-      localStorage.setItem("user", JSON.stringify(response?.response ?? ""));
-      navigate("/admin/view");
-    }
-  };
+  const [email, setEmail] = useState("");
 
   //login function
   //    /api/auth/login -> success
-const handleClick = async () => {
-  const response = await axiosInstance
-    .post("/auth/login", { username, password })
-    .then((res) => res?.data)
-    .catch(() => null);
+  const handleClick = async () => {
+    if (formType === "login") {
+      const response = await handleLogin(username, password);
 
-  if (response?.success) {
-    localStorage.setItem("token", response?.response);
-    getProfile();
-  }
-};
+      response?.success && navigate("/");
+    } else {
+      const response = await handleSignup(username, password, email);
+      response?.success && handleLoginModel();
+    }
+  };
+
+  const handleLoginModel = () => {
+    const cont = document.querySelector(".cont");
+    cont.classList.remove("sign-up-mode");
+    setFormType("login");
+  };
+
+  const handleSignupModel = () => {
+    const cont = document.querySelector(".cont");
+    cont.classList.add("sign-up-mode");
+    setFormType("signup");
+  };
 
   //grab token putsomewhere
   // call /api/profile -> succ -> putsomewhere
@@ -103,8 +104,7 @@ const handleClick = async () => {
             </div>
 
             <button type="button" className="btn" onClick={handleClick}>
-              {" "}
-              Login{" "}
+              Login
             </button>
             <p className="account-text">
               Dont have an account?
@@ -124,15 +124,15 @@ const handleClick = async () => {
             <div className="input-field">
               <div className="input-cont">
                 <i className="fas fa-user"></i>
-                <input type="text" placeholder="Username" />
-              </div>
-            </div>
 
-            {/* <!--Input field for Email --> */}
-            <div className="input-field">
-              <div className="input-cont">
-                <i className="fas fa-envelope"></i>
-                <input type="text" placeholder="Email" />
+                <input
+                  type="text"
+                  name="text"
+                  required
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setusername(e.target.value)}
+                />
               </div>
             </div>
 
@@ -140,11 +140,35 @@ const handleClick = async () => {
             <div className="input-field">
               <div className="input-cont">
                 <i className="fas fa-lock"></i>
-                <input type="password" placeholder="Password" />
+                <input
+                  type="password"
+                  name="password"
+                  required
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setpassword(e.target.value)}
+                />
+              </div>
+            </div>
+            {/* <!--Input field for Email --> */}
+            <div className="input-field">
+              <div className="input-cont">
+                <i className="fas fa-lock"></i>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
             </div>
 
-            <input type="submit" value="Sign up" className="btn" />
+            {/* <input type="submit" value="Sign up" className="btn" /> */}
+            <button className="btn" type="button" onClick={handleClick}>
+              Sign up
+            </button>
             <p className="account-text">
               Already have an account
               <a href="#" id="sign-in-btn2" onClick={handleSignUpClick}>
@@ -152,11 +176,6 @@ const handleClick = async () => {
               </a>
             </p>
           </form>
-
-
-
-
-          
         </div>
         <div className="panels-cont">
           <div className="panel left-panel">
@@ -166,10 +185,7 @@ const handleClick = async () => {
               <button
                 className="btn"
                 id="sign-in-btn"
-                onClick={() => {
-                  const cont = document.querySelector(".cont");
-                  cont.classList.remove("sign-up-mode");
-                }}
+                onClick={handleLoginModel}
               >
                 Log in
               </button>
@@ -185,10 +201,7 @@ const handleClick = async () => {
               <button
                 className="btn"
                 id="sign-up-btn"
-                onClick={() => {
-                  const cont = document.querySelector(".cont");
-                  cont.classList.add("sign-up-mode");
-                }}
+                onClick={handleSignupModel}
               >
                 Sign up
               </button>

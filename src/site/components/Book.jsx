@@ -6,21 +6,14 @@ import {
   CardText,
   CardTitle,
 } from "reactstrap";
-import { addToCart} from "../../services/starWarsCharater";
-
+import { addToCart } from "../../services/starWarsCharater";
 
 export default function Book({ book }) {
- 
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     try {
       // console.log(id);
-     const response = await addToCart(book.bookId);
-
-     alert(response?.message)
-
-
-      
-      
+      const response = await addToCart(book.bookId);
+      alert(response?.message);
     } catch (error) {
       // console.error("An error occurred:", error);
     }
@@ -75,6 +68,3 @@ export default function Book({ book }) {
     </div>
   );
 }
-
-
-  

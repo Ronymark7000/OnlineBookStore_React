@@ -1,5 +1,9 @@
 import axiosInstance from "../../axiosInstance";
 
+export const getallBooks = async (data) => {
+  return axiosInstance.get(`view/books`, data);
+};
+
 export const getBooks = async (data) => {
   return axiosInstance.get(`/books`, data);
 };
@@ -8,8 +12,19 @@ export const getUsers = async () => {
   return axiosInstance.get(`/admin/users`);
 };
 
-export const getBookById = async ( bookId) => {
+export const getBookById = async (bookId) => {
   return axiosInstance.get(`/book/${bookId}`, bookId);
+};
+
+export const getProfile = async () => {
+  const response = await axiosInstance
+    .get("/profile")
+    .then((res) => res?.data)
+    .catch(() => null);
+
+  if (response?.success) {
+    localStorage.setItem("user", JSON.stringify(response?.response ?? ""));
+  }
 };
 
 export const getAllFromCart = async () => {
@@ -29,28 +44,53 @@ export const addToCart = async (bookId) => {
     .post("/cart/add", bookId)
     .then((res) => res?.data)
     .catch(() => null);
-  if (response?.success === true) {
+  if (response?.success) {
     getAllFromCart();
   }
-  return response
+  return response;
 };
 
 export const editCart = async (cartId, quantity) => {
-  const response = axiosInstance
-    .put(`/cart/edit/${cartId}`, quantity)
+  console.log(cartId, quantity);
+  const response = await axiosInstance
+    .put(`/cart/update/${cartId}`, quantity)
     .then((res) => res?.data)
     .catch(() => null);
-  if (response?.success === true) {
+
+  if (response?.success) {
     getAllFromCart();
   }
+  return response;
 };
 
 export const deleteBookFromCart = async (cartId) => {
-  const response = axiosInstance
+  const response = await axiosInstance
     .delete(`/cart/${cartId}`)
+    .then((res) => {
+      if (res?.data) {
+        getAllFromCart();
+      }
+      return res?.data;
+    })
+    .catch(() => null);
+  return response;
+};
+
+export const handleLogin = async (username, password) => {
+  const response = await axiosInstance
+    .post("/auth/login", { username, password })
     .then((res) => res?.data)
     .catch(() => null);
-  if (response?.success === true) {
-    getAllFromCart();
+
+  if (response?.success) {
+    getProfile();
   }
+  return response;
+};
+
+export const handleSignup = async (username, password, email) => {
+  return await axiosInstance
+    .post("/auth/register", { username, password, email })
+    .then((res) => res?.data)
+    .catch(() => null);
 };

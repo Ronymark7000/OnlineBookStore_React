@@ -31,7 +31,7 @@ const AppRoutes = () => {
           {/* <Route path="register" element={<Register />} /> */}
         </Route>
         <Route
-          path="/admin"
+          path="/admin/"
           element={
             <Protected>
               <AdminLayout />

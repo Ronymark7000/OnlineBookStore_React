@@ -1,4 +1,14 @@
-function CartItem({cart}) {
+import { useEffect, useState } from "react";
+
+function CartItem({ cart, handleDelete, handleUpdate }) {
+  const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    if (cart) {
+      setQuantity(cart?.quantity);
+    }
+  }, [cart]);
+
   return (
     <div className="row mb-4 d-flex justify-content-between align-items-center">
       <div className="col-md-2 col-lg-2 col-xl-2">
@@ -13,44 +23,39 @@ function CartItem({cart}) {
         <h6 className="text-black mb-0">{cart?.book?.author}</h6>
       </div>
       <div className="col-md-3 col-lg-3 d-flex">
-        <button
-          className="btn btn-link px-1"
-          onClick={() => {
-            document.getElementById("form1").stepDown();
-          }}
-        >
-          <i className="fas fa-minus"></i>
-        </button>
-
         <input
           id="form1"
-          min="1"
           name="quantity"
-          defaultValue="1"
           type="number"
           className="form-control form-control-lg"
-          style={{width:"100px"}}
+          style={{ width: "100px" }}
+          min={1}
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
         />
 
         <button
           className="btn btn-link px-1"
-          onClick={() => {
-            document.getElementById("form1").stepUp();
-          }}
+          onClick={() => handleUpdate(cart?.cartId, quantity)}
         >
-          <i className="fas fa-plus"></i>
+          Change
         </button>
       </div>
+
       <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-        <h6 className="mb-0">Nrs{cart?.book?.price}</h6>
+        <h6 className="mb-0">Nrs{cart?.book?.price * quantity}</h6>
       </div>
+
       <div className="col-md-1 col-lg-1 col-xl-1 text-end">
         <a href="#!" className="text-muted">
-          <i className="fas fa-times"></i>
+          <i
+            className="fas fa-times"
+            onClick={() => handleDelete(cart.cartId)}
+          ></i>
         </a>
       </div>
     </div>
   );
 }
 
-export default CartItem
+export default CartItem;

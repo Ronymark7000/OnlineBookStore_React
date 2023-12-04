@@ -1,11 +1,83 @@
+import { useEffect, useState } from "react";
+import { deleteBookFromCart, editCart } from "../../services/starWarsCharater";
 import CartItem from "./CartItem";
 
 function Cart() {
-  
   // console.log(id);
   const cart = localStorage.getItem("cart");
-  const cartData = JSON.parse(cart || "[]");
+  const [cartData, setCartData] = useState(JSON.parse(cart || "[]"));
+  const [total, setTotal] = useState(0);
+  const [totalAfterDelivery, setTotalAfterDelivery] = useState(0);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [deliveryOptionPrice, setDeliveryOptionPrice] = useState(0);
 
+  const handleUpdate = async (cartId, quantity) => {
+    const response = await editCart(cartId, quantity);
+    // console.log(response)
+    if (response?.success) {
+      let carts = [];
+
+      cartData?.forEach((item) => {
+        if (item?.cartId === cartId) {
+          carts.push({ ...item, quantity: quantity });
+        } else {
+          carts.push(item);
+        }
+      });
+      setCartData(carts);
+      window.alert(response?.message);
+    } else {
+      window.alert(response?.message);
+    }
+  };
+
+  const handleDelete = async (cartId) => {
+    const response = await deleteBookFromCart(cartId);
+
+    if (response?.success) {
+      const carts = cartData?.filter((item) => item?.cartId !== cartId);
+      setCartData(carts);
+      alert("Book Deleted");
+    } else {
+      alert("error");
+    }
+  };
+
+  const handleDeliveryOptionChange = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
+
+    // Set the delivery option price based on the selected option
+    switch (selectedValue) {
+      case "1":
+        setDeliveryOptionPrice(50);
+        break;
+      case "2":
+        setDeliveryOptionPrice(200);
+        break;
+      case "3":
+        setDeliveryOptionPrice(25);
+        break;
+      default:
+        setDeliveryOptionPrice(0);
+    }
+  };
+
+  useEffect(() => {
+    if (cartData) {
+      setCartData(cartData);
+
+      let totalprice = 0;
+      cartData.forEach((cart) => {
+        totalprice += cart?.quantity * cart?.book?.price;
+      });
+
+      setTotal(totalprice);
+      // Calculate the total price including the delivery option
+      const totalPriceWithDelivery = total + deliveryOptionPrice;
+      setTotalAfterDelivery(totalPriceWithDelivery);
+    }
+  }, [cartData, totalAfterDelivery, deliveryOptionPrice]);
 
   return (
     <>
@@ -36,7 +108,12 @@ function Cart() {
                         <hr className="my-4" />
 
                         {cartData.map((cart, index) => (
-                          <CartItem key={index} cart={cart} />
+                          <CartItem
+                            key={index}
+                            cart={cart}
+                            handleDelete={handleDelete}
+                            handleUpdate={handleUpdate}
+                          />
                         ))}
 
                         <h5 className="text-uppercase mb-3">Give code</h5>
@@ -47,6 +124,8 @@ function Cart() {
                               type="text"
                               id="form3Examplea2"
                               className="form-control form-control-lg"
+                              value=""
+                              onChange={() => console.log("first")}
                             />
                             <label
                               className="form-label"
@@ -61,7 +140,7 @@ function Cart() {
 
                         <div className="d-flex justify-content-between mb-5">
                           <h5 className="text-uppercase">Total price</h5>
-                          <h5>€ 137.00</h5>
+                          <h5>Nrs. {total}</h5>
                         </div>
 
                         <button
@@ -82,7 +161,7 @@ function Cart() {
 
                       <div className="d-flex justify-content-between mb-4">
                         <h5 className="text-uppercase">Total Price</h5>
-                        <h5>€ 132.00</h5>
+                        <h5>NRs {total}</h5>
                       </div>
 
                       <h5 className="text-uppercase mb-3">
@@ -92,11 +171,17 @@ function Cart() {
                       <div className="mb-4 pb-2">
                         <div className="input-group mb-3">
                           <label className="input-group-text">Options</label>
-                          <select className="form-select" value="Types">
-                            <option selected>Types</option>
-                            <option value="1">Express Delivery</option>
-                            <option value="2">Instant Delivery</option>
-                            <option value="3">Pickup on Warehouse</option>
+                          <select
+                            className="form-select"
+                            value={selectedOption}
+                            onChange={handleDeliveryOptionChange}
+                          >
+                            <option value="">Choose an option...</option>
+                            <option value="1">Express Delivery(Rs.50)</option>
+                            <option value="2">Instant Delivery(Rs.200)</option>
+                            <option value="3">
+                              Pickup on Warehouse(Rs.25)
+                            </option>
                           </select>
                         </div>
                       </div>
@@ -105,7 +190,7 @@ function Cart() {
 
                       <div className="d-flex justify-content-between mb-5">
                         <h5 className="text-uppercase">Total price</h5>
-                        <h5>€ 137.00</h5>
+                        <h5>{totalAfterDelivery}</h5>
                       </div>
 
                       <div className="d-grid gap-2 col-6 mx-auto">
