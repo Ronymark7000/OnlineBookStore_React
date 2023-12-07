@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { deleteBookFromCart, editCart } from "../../services/starWarsCharater";
 import CartItem from "./CartItem";
+import axiosInstance from "../../../axiosInstance";
 
 function Cart() {
   // console.log(id);
@@ -62,6 +63,16 @@ function Cart() {
         setDeliveryOptionPrice(0);
     }
   };
+  const addOrder = async () => {
+    const response = await axiosInstance.post(`/order`);
+    if (response?.data?.success) {
+      setCartData([]);
+      localStorage.removeItem(cart);
+      window.alert("Succesfully Palced Your Order");
+    } else {
+      window.alert("Purchase failed");
+    }
+  };
 
   useEffect(() => {
     if (cartData) {
@@ -74,7 +85,7 @@ function Cart() {
 
       setTotal(totalprice);
       // Calculate the total price including the delivery option
-      const totalPriceWithDelivery = total + deliveryOptionPrice;
+      const totalPriceWithDelivery = totalprice + deliveryOptionPrice;
       setTotalAfterDelivery(totalPriceWithDelivery);
     }
   }, [cartData, totalAfterDelivery, deliveryOptionPrice]);
@@ -197,6 +208,7 @@ function Cart() {
                         <button
                           className="btn btn-dark btn-block "
                           type="button"
+                          onClick={addOrder}
                         >
                           Purchase
                         </button>

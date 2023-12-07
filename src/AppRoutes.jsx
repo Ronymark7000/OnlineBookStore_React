@@ -5,7 +5,7 @@ import AdminLayout from "./admin/AdminLayout";
 
 import Login from "./site/Login";
 import PageNotFound from "./site/404Page/404Page";
-import Protected from "./Protected";
+import Protected from "./layouts/Protected";
 
 import UserDashboard from "./admin/Dashboard/UserDashboard";
 import BookDashboard from "./admin/Dashboard/BookDashboard";
@@ -17,8 +17,10 @@ import UpdateBook from "./admin/components/book/UpdateBook";
 import EditBook from "./admin/components/book/EditBooks";
 import Cart from "./site/components/Cart";
 import DashboardMain from "./admin/Dashboard/DashboardMain";
-
-
+import BookDetails from "./site/components/BookDetails";
+import OrderTable from "./admin/Order/OrderTable";
+import IsLoggedIn from "./layouts/IsLoggedIn";
+import ShowSingleReview from "./site/components/ShowSingleReview";
 
 const AppRoutes = () => {
   return (
@@ -27,18 +29,27 @@ const AppRoutes = () => {
         <Route path="/" element={<SiteLayout />}>
           <Route index element={<HomePage />} />
           <Route path="login" element={<Login />} />
-          <Route path="cart" element={<Cart />} />
+          <Route
+            path="cart"
+            element={
+              <IsLoggedIn>
+                <Cart />
+              </IsLoggedIn>
+            }
+          />
+          <Route path="bookdetails/:id" element={<BookDetails />} />
+
           {/* <Route path="register" element={<Register />} /> */}
         </Route>
         <Route
-          path="/admin/"
+          path="/admin"
           element={
             <Protected>
               <AdminLayout />
             </Protected>
           }
         >
-          <Route path="view" element={<DashboardMain />} />
+          <Route index element={<DashboardMain />} />
 
           <Route path="book-dashboard" element={<BookDashboard />} />
           <Route path="add-books" element={<AddBook />} />
@@ -49,6 +60,9 @@ const AppRoutes = () => {
           <Route path="add-user" element={<AddUser />} />
           <Route path="update-user" element={<UpdateUser />} />
           <Route path="edit-user/:id" element={<EditUser />} />
+          <Route path="review" element={<ShowSingleReview />} />
+
+          <Route path="orders" element={<OrderTable />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>

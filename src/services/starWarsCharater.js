@@ -84,6 +84,7 @@ export const handleLogin = async (username, password) => {
 
   if (response?.success) {
     getProfile();
+    getAllFromCart();
   }
   return response;
 };
@@ -93,4 +94,18 @@ export const handleSignup = async (username, password, email) => {
     .post("/auth/register", { username, password, email })
     .then((res) => res?.data)
     .catch(() => null);
+};
+
+export const addReview = async (data) => {
+  return axiosInstance.post(`/review`, data);
+};
+
+export const getAllOrders = async () => {
+  const response = await axiosInstance.get("/admin/orders");
+  return response;
+};
+
+export const handleLogout = () => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("cart");
 };

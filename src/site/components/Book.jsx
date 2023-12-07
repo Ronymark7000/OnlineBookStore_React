@@ -7,13 +7,14 @@ import {
   CardTitle,
 } from "reactstrap";
 import { addToCart } from "../../services/starWarsCharater";
+import { Link } from "react-router-dom";
 
 export default function Book({ book }) {
   const handleSubmit = async () => {
     try {
       // console.log(id);
       const response = await addToCart(book.bookId);
-      alert(response?.message);
+      window.alert(response?.message);
     } catch (error) {
       // console.error("An error occurred:", error);
     }
@@ -42,7 +43,9 @@ export default function Book({ book }) {
                 justifyContent: "space-between",
               }}
             >
-              <Button style={{ background: "blue" }}>Buy</Button>
+              <Link to={`bookdetails/${book?.bookId}`}>
+                <Button style={{ background: "blue" }}>View Details</Button>
+              </Link>
 
               {!bookExistAlreadyExistInCart ? (
                 <Button

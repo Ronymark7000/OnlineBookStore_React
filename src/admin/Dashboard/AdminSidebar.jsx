@@ -2,7 +2,7 @@ import "../style/sidebar.css";
 import { useEffect } from "react";
 import Prof from "../../assets/profile.png";
 import { Link } from "react-router-dom";
-
+import { handleLogout } from "../../services/starWarsCharater";
 
 const AdminSidebar = () => {
   useEffect(() => {
@@ -62,7 +62,7 @@ const AdminSidebar = () => {
               </li>
 
               <li>
-                <Link to={"/admin/view"}>
+                <Link to={"/admin"}>
                   <span className="icon">
                     <ion-icon name="home-outline"></ion-icon>
                   </span>
@@ -89,7 +89,7 @@ const AdminSidebar = () => {
               </li>
 
               <li>
-                <Link to={"/admin/book-dashboard"}>
+                <Link to="/admin/book-dashboard">
                   <span className="icon">
                     <ion-icon name="file-tray-stacked-outline"></ion-icon>
                   </span>
@@ -98,12 +98,12 @@ const AdminSidebar = () => {
               </li>
 
               <li>
-                <a href="#">
+                <Link to="/admin/orders">
                   <span className="icon">
                     <ion-icon name="receipt-outline"></ion-icon>
                   </span>
                   <span className="title">Customer Order</span>
-                </a>
+                </Link>
               </li>
 
               <li>
@@ -134,30 +134,30 @@ const AdminSidebar = () => {
               </li>
 
               <li>
-                <a href="#">
+                <Link to="/admin/review">
                   <span className="icon">
                     <ion-icon name="megaphone-outline"></ion-icon>
                   </span>
                   <span className="title">Feedbacks</span>
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#">
+                <Link to="/">
                   <span className="icon">
                     <ion-icon name="desktop-outline"></ion-icon>
                   </span>
                   <span className="title">Webpage</span>
-                </a>
+                </Link>
               </li>
 
               <li>
-                <a href="#">
+                <Link to="#" onClick={handleLogout}>
                   <span className="icon">
                     <ion-icon name="exit-outline"></ion-icon>
                   </span>
                   <span className="title">Sign Out</span>
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

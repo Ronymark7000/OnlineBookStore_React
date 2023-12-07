@@ -1,13 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { handleLogout } from "../../services/starWarsCharater";
 
 function Navbar() {
   // State to manage the navbar's openness
   const [isOpen, setIsOpen] = useState(false);
 
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || ""
+  );
+
   // Function to toggle the navbar's openness
   const toggle = () => setIsOpen(!isOpen);
+
+  const handleLogoutButton = () => {
+    handleLogout();
+    setUser(null);
+  };
 
   return (
     <div>
@@ -37,11 +46,6 @@ function Navbar() {
         >
           {/* Navbar links */}
           <ul className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/login"}>
-                <span className="nav-link">Get Started</span>
-              </Link>
-            </li>
             <li className="nav-item active">
               <Link to={"/"}>
                 <span className="nav-link">Home</span>
@@ -83,6 +87,20 @@ function Navbar() {
                 TEST
               </a>
             </li>
+
+            {user ? (
+              <li onClick={handleLogoutButton} className="nav-item">
+                <button className="btn btn-danger">
+                  <span>Logout</span>
+                </button>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <Link to={"/login"}>
+                  <span className="nav-link">Get Started</span>
+                </Link>
+              </li>
+            )}
           </ul>
 
           {/* Search input and button */}
@@ -120,11 +138,11 @@ function Navbar() {
 
 export default Navbar;
 
-
-
-{/* <Link to={"/admin/view"}>
+{
+  /* <Link to={"/admin/view"}>
   <span className="icon">
     <ion-icon name="home-outline"></ion-icon>
   </span>
   <span className="title">Dashboard</span>
-</Link>; */}
+</Link>; */
+}

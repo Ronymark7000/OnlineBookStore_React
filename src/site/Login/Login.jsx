@@ -30,8 +30,16 @@ const Login = () => {
   const handleClick = async () => {
     if (formType === "login") {
       const response = await handleLogin(username, password);
+      console.log(response?.response?.role);
+      console.log(response?.success);
 
-      response?.success && navigate("/");
+      if (response?.success) {
+        response?.response?.role === "admin"
+          ? navigate("/admin")
+          : navigate("/");
+      }
+
+      //If the user is admin changes into admin page
     } else {
       const response = await handleSignup(username, password, email);
       response?.success && handleLoginModel();
