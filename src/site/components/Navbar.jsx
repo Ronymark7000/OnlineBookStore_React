@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleLogout } from "../../services/starWarsCharater";
 
 function Navbar() {
+  const navigate = useNavigate();
   // State to manage the navbar's openness
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,6 +13,15 @@ function Navbar() {
 
   // Function to toggle the navbar's openness
   const toggle = () => setIsOpen(!isOpen);
+
+  const [search, setSearch] = useState("");
+
+  const handleSearch = () => {
+    if (search?.length > 0) {
+      setSearch("");
+      navigate(`?page=1&query=${search}`);
+    }
+  };
 
   const handleLogoutButton = () => {
     handleLogout();
@@ -57,36 +67,6 @@ function Navbar() {
               </Link>
             </li>
             {/* Dropdown menu */}
-            <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Categories
-              </a>
-              <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Fiction
-                </a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">
-                  ABC
-                </a>
-              </div>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link disabled" href="#">
-                TEST
-              </a>
-            </li>
 
             {user ? (
               <li onClick={handleLogoutButton} className="nav-item">
@@ -111,6 +91,8 @@ function Navbar() {
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 style={{
                   width: "200px",
                   height: "40px",
@@ -125,6 +107,7 @@ function Navbar() {
                   height: "40px",
                 }}
                 type="submit"
+                onClick={handleSearch}
               >
                 Search
               </button>

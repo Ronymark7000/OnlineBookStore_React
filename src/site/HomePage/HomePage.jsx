@@ -12,10 +12,13 @@ const HomePage = () => {
   const [data, setData] = useState([]);
   const [queryParams, setQueryParams] = useSearchParams();
   const [totalPages, setTotalPages] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const fetchBooks = async (page) => {
+  const fetchBooks = async (query, page) => {
     try {
-      const response = await axiosInstance.get(`/books?page=${page}`);
+      const response = await axiosInstance.get(
+        `/books?query=${query}&page=${page}`
+      );
       const data = response?.data;
       setData(data?.response);
       setTotalPages(data?.totalPage);
@@ -23,13 +26,26 @@ const HomePage = () => {
       console.error("Error fetching books:", error);
     }
   };
+  useEffect(() => {
+    const query = queryParams.get("query") ?? "";
+    const page = parseInt(queryParams.get("page") ?? 1);
+    setSearchQuery(query);
+    fetchBooks(query, page);
+  }, [queryParams]);
+
+  useEffect(() => {
+    const query = queryParams.get("query") ?? "";
+    const page = parseInt(queryParams.get("page") ?? 1);
+    setSearchQuery(query);
+    fetchBooks(query, page);
+  }, [queryParams]);
 
   useEffect(() => {
     fetchBooks(queryParams.get("page") || 1);
   }, [queryParams]);
 
   const handlePageChange = (pageNumber) => {
-    setQueryParams({ page: pageNumber });
+    setQueryParams({ query: searchQuery, page: pageNumber });
   };
 
   const handlePrevClick = () => {
