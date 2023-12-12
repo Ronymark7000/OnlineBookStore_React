@@ -16,6 +16,7 @@ import EditUser from "./admin/components/user/EditUser";
 import UpdateBook from "./admin/components/book/UpdateBook";
 import EditBook from "./admin/components/book/EditBooks";
 import Cart from "./site/components/Cart";
+import Profile from "./site/components/Profile";
 import DashboardMain from "./admin/Dashboard/DashboardMain";
 import BookDetails from "./site/components/BookDetails";
 import OrderTable from "./admin/Order/OrderTable";
@@ -28,6 +29,7 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/" element={<SiteLayout />}>
           <Route index element={<HomePage />} />
+
           <Route path="login" element={<Login />} />
           <Route
             path="cart"
@@ -37,12 +39,22 @@ const AppRoutes = () => {
               </IsLoggedIn>
             }
           />
+
+          <Route
+            path="profile"
+            element={
+              <IsLoggedIn>
+                <Profile />
+              </IsLoggedIn>
+            }
+          />
+
           <Route path="bookdetails/:id" element={<BookDetails />} />
 
           {/* <Route path="register" element={<Register />} /> */}
         </Route>
         <Route
-          path="/admin"
+          path="admin"
           element={
             <Protected>
               <AdminLayout />

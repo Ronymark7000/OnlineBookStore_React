@@ -32,7 +32,13 @@ function Navbar() {
     <div>
       {/* Navbar component */}
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">
+        <a
+          className="navbar-brand"
+          href="#"
+          style={{
+            marginLeft: "2%",
+          }}
+        >
           ABC Books
         </a>
         {/* Navbar toggler button */}
@@ -66,25 +72,17 @@ function Navbar() {
                 <span className="nav-link">Cart</span>
               </Link>
             </li>
-            {/* Dropdown menu */}
-
-            {user ? (
-              <li onClick={handleLogoutButton} className="nav-item">
-                <button className="btn btn-danger">
-                  <span>Logout</span>
-                </button>
-              </li>
-            ) : (
-              <li className="nav-item">
-                <Link to={"/login"}>
-                  <span className="nav-link">Get Started</span>
-                </Link>
-              </li>
-            )}
           </ul>
 
           {/* Search input and button */}
-          <div style={{ display: "flex", marginTop: "10px" }}>
+          <div
+            style={{
+              display: "flex",
+              marginTop: "10px",
+              marginLeft: "60%",
+              marginRight: "3%",
+            }}
+          >
             <div style={{ display: "flex", justifyContent: "space-evenly" }}>
               <input
                 className="form-control"
@@ -113,6 +111,29 @@ function Navbar() {
               </button>
             </div>
           </div>
+
+          <ul className="navbar-nav mr-auto">
+            {user ? (
+              <div className="d-flex">
+                <li onClick={handleLogoutButton} className="nav-item">
+                  <Link to="#">
+                    <span className="nav-link">Logout</span>
+                  </Link>
+                </li>
+                <li className="nav-item active">
+                  <Link to={"/profile"}>
+                    <span className="nav-link">Profile</span>
+                  </Link>
+                </li>
+              </div>
+            ) : (
+              <li className="nav-item">
+                <Link to={"/login"}>
+                  <span className="nav-link">Get Started</span>
+                </Link>
+              </li>
+            )}
+          </ul>
         </div>
       </nav>
     </div>

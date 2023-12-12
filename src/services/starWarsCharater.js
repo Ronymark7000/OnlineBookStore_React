@@ -4,8 +4,8 @@ export const getallBooks = async (data) => {
   return axiosInstance.get(`view/books`, data);
 };
 
-export const getBooks = async (data) => {
-  return axiosInstance.get(`/books?page={page}`, data);
+export const getBooks = async () => {
+  return axiosInstance.get(`/books?page={page}`);
 };
 
 export const getUsers = async () => {

@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import DataTable from "../DataTable";
-import { getBooks } from "../../../services/starWarsCharater";
+import { getallBooks } from "../../../services/starWarsCharater";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../../../axiosInstance";
 
 const UpdateBook = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["starWarsCharacters"],
-    queryFn: () => getBooks(),
+    queryFn: () => getallBooks(),
   });
 
   const columns = useMemo(() => {
@@ -108,7 +108,7 @@ const UpdateBook = () => {
                   window.alert("Could not delete the data");
                 });
             }
-          }
+          };
 
           return (
             <div>

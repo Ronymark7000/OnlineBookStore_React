@@ -14,17 +14,16 @@ function OrderTable() {
     <Table responsive style={{ marginTop: "70px", width: "100%" }}>
       <thead>
         <tr>
-          <th>orderId</th>
-          <th>bookId</th>
-          <th>userId</th>
-          <th>BookName</th>
+          <th>Id</th>
+          <th>Book Code</th>
+          <th>User Id</th>
+          <th>Book Name</th>
           <th>Ordered At</th>
-          <th>status</th>
+          <th>Status</th>
           {/* <th>shippingAddress</th>
           <th>shippedTime</th> */}
-          <th>price</th>
-          <th>quantity</th>
-          <th>totalPrice</th>
+          <th>Quantity</th>
+          <th>Book Price</th>
         </tr>
       </thead>
       <tbody>

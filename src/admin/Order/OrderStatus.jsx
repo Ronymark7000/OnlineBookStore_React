@@ -33,7 +33,7 @@ function OrderStatus({ order }) {
       </td>
       {/* <td>{order?.shippingAddress}</td>
       <td>{order?.shippedTime}</td> */}
-      <td>{order?.price}</td>
+
       <td>{order?.quantity}</td>
       <td>{order?.totalPrice}</td>
       <td className="">

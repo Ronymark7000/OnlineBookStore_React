@@ -32,13 +32,11 @@ const Login = () => {
       const response = await handleLogin(username, password);
 
       if (response?.success) {
-        if (response?.response?.role === "admin") {
-          navigate("/admin");
-        } else {
-          navigate("/");
-        }
+        localStorage.setItem("user", JSON.stringify(response?.response));
+        const user = JSON.parse(localStorage.getItem("user"));
+        // console.log(user);
+        user.role === "admin" ? navigate("/admin") : navigate("/");
       }
-
       //If the user is admin changes into admin page
     } else {
       const response = await handleSignup(username, password, email);
