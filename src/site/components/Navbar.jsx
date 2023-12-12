@@ -115,14 +115,19 @@ function Navbar() {
           <ul className="navbar-nav mr-auto">
             {user ? (
               <div className="d-flex">
-                <li onClick={handleLogoutButton} className="nav-item">
-                  <Link to="#">
-                    <span className="nav-link">Logout</span>
+                <li className="nav-item active">
+                  <Link to={"/orders"}>
+                    <span className="nav-link">Orders</span>
                   </Link>
                 </li>
                 <li className="nav-item active">
                   <Link to={"/profile"}>
                     <span className="nav-link">Profile</span>
+                  </Link>
+                </li>
+                <li onClick={handleLogoutButton} className="nav-item">
+                  <Link to="#">
+                    <span className="nav-link">Logout</span>
                   </Link>
                 </li>
               </div>

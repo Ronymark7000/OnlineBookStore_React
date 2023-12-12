@@ -2,7 +2,6 @@ import "../style/dashboard.css";
 // import Chart from "chart.js/auto";
 // import { useEffect, useRef } from "react";
 
-
 function DashboardMain() {
   // const inventoryChartRef = useRef(null);
   // // const orderChartRef = useRef(null);
@@ -65,7 +64,6 @@ function DashboardMain() {
   //      });
   //    }
   //  }, [inventoryChartData, orderChartData]);
-
 
   return (
     <>
@@ -131,4 +129,4 @@ function DashboardMain() {
   );
 }
 
-export default DashboardMain
+export default DashboardMain;

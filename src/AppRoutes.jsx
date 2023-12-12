@@ -5,7 +5,6 @@ import AdminLayout from "./admin/AdminLayout";
 
 import Login from "./site/Login";
 import PageNotFound from "./site/404Page/404Page";
-import Protected from "./layouts/Protected";
 
 import UserDashboard from "./admin/Dashboard/UserDashboard";
 import BookDashboard from "./admin/Dashboard/BookDashboard";
@@ -22,6 +21,9 @@ import BookDetails from "./site/components/BookDetails";
 import OrderTable from "./admin/Order/OrderTable";
 import IsLoggedIn from "./layouts/IsLoggedIn";
 import ShowSingleReview from "./site/components/ShowSingleReview";
+import IsAdmin from "./layouts/IsAdmin";
+import Public from "./layouts/Public";
+import OrderPage from "./site/components/OrderPage";
 
 const AppRoutes = () => {
   return (
@@ -30,7 +32,15 @@ const AppRoutes = () => {
         <Route path="/" element={<SiteLayout />}>
           <Route index element={<HomePage />} />
 
-          <Route path="login" element={<Login />} />
+          <Route
+            path="login"
+            element={
+              <Public>
+                <Login />
+              </Public>
+            }
+          />
+
           <Route
             path="cart"
             element={
@@ -50,15 +60,16 @@ const AppRoutes = () => {
           />
 
           <Route path="bookdetails/:id" element={<BookDetails />} />
+          <Route path="orders" element={<OrderPage />}></Route>
 
           {/* <Route path="register" element={<Register />} /> */}
         </Route>
         <Route
           path="admin"
           element={
-            <Protected>
+            <IsAdmin>
               <AdminLayout />
-            </Protected>
+            </IsAdmin>
           }
         >
           <Route index element={<DashboardMain />} />
